@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Maria</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0a0a0c; /* Fundo escuro noite */
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 80%;
+        }
+
+        .lua {
+            font-size: 50px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px #fff);
+        }
+
+        h1 {
+            font-weight: 300;
+            line-height: 1.6;
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+        }
+
+        .contador {
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            color: #888;
+            border-top: 1px solid #333;
+            display: inline-block;
+            padding-top: 10px;
+        }
+
+        /* Animação suave para a mensagem */
+        .fade-in {
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container fade-in">
+        <div class="lua">🌙</div>
+        <h1>"Você é linda igual a lua, a diferença é que a lua ilumina a noite, e você ilumina a minha vida."</h1>
+        <div class="contador">1 / 7</div>
+    </div>
+
+</body>
+</html>
