@@ -14,7 +14,6 @@
         .container { width: 90%; max-width: 400px; padding: 20px; }
         .hidden { display: none; }
         
-        /* Estilo dos Botões */
         button {
             background: transparent; color: white; border: 1px solid #444;
             padding: 15px 30px; margin: 10px 0; width: 100%;
@@ -22,7 +21,7 @@
             transition: 0.3s;
         }
         button:active { background: #222; transform: scale(0.98); }
-        .btn-voltar { margin-top: 30px; border: none; color: #888; font-size: 0.8rem; }
+        .btn-voltar { margin-top: 30px; border: none; color: #888; font-size: 0.8rem; background: transparent; }
 
         .lua { font-size: 50px; margin-bottom: 20px; filter: drop-shadow(0 0 10px #fff); }
         h1 { font-weight: 300; font-size: 1.4rem; line-height: 1.6; }
@@ -57,18 +56,17 @@
     </div>
 
     <script>
-        // --- CONFIGURAÇÃO MANUAL ---
-        // Mude esse número todo dia (1 para dia 1, 2 para dia 2...)
+        // --- TODO DIA MUDE ESSE NÚMERO ABAIXO ---
         const diaLiberado = 1; 
 
         const mensagens = {
             1: "Você é linda igual a lua, a diferença é que a lua ilumina a noite, e você ilumina a minha vida. - André",
-            2: "Frase do dia 2 aqui...",
-            3: "Frase do dia 3 aqui...",
-            4: "Frase do dia 4 aqui...",
-            5: "Frase do dia 5 aqui...",
-            6: "Frase do dia 6 aqui...",
-            7: "Frase do dia 7 aqui..."
+            2: "Frase do dia 2: Eu amo passar cada segundo ao seu lado.",
+            3: "Frase do dia 3: Você é o meu melhor presente.",
+            4: "Frase do dia 4: Seu sorriso é o que me faz feliz.",
+            5: "Frase do dia 5: Obrigado por ser quem você é.",
+            6: "Frase do dia 6: Cada dia que passa, eu tenho mais certeza de nós.",
+            7: "Frase do dia 7: Eu te amo hoje, amanhã e sempre, Maria."
         };
 
         function mudarTela(tela) {
@@ -87,37 +85,5 @@
             }
         }
     </script>
-</body>
-</html>
-        }
-
-        .contador {
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            color: #888;
-            border-top: 1px solid #333;
-            display: inline-block;
-            padding-top: 10px;
-        }
-
-        /* Animação suave para a mensagem */
-        .fade-in {
-            animation: fadeIn 2s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container fade-in">
-        <div class="lua">🌙</div>
-        <h1>"Você é linda igual a lua, a diferença é que a lua ilumina a noite, e você ilumina a minha vida. - André"</h1>
-        <div class="contador">1 / 7</div>
-    </div>
-
 </body>
 </html>
