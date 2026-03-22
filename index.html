@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,38 +7,38 @@
     <title>Para Maria</title>
     <style>
         body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #0a0a0c; color: #f0f0f0; font-family: sans-serif; text-align: center; overflow: hidden; }
-        .container { width: 90%; max-width: 400px; padding: 20px; transition: 0.5s; }
+        .container { width: 90%; max-width: 400px; padding: 20px; }
         .hidden { display: none !important; }
-        
-        button { background: transparent; color: white; border: 1px solid #444; padding: 15px; margin: 5px 0; width: 100%; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #1a1a1a; border-color: #888; }
-        button:disabled { color: #444; border-color: #222; cursor: not-allowed; }
-        
+        button { background: transparent; color: white; border: 1px solid #444; padding: 15px; margin: 5px 0; width: 100%; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+        button:active { background: #222; }
         .btn-voltar { margin-top: 30px; border: none; color: #888; background: transparent; text-decoration: underline; cursor: pointer; }
-        .lua { font-size: 50px; margin-bottom: 20px; filter: drop-shadow(0 0 10px #fff); }
-        h1 { font-weight: 300; font-size: 1.2rem; line-height: 1.5; margin-bottom: 20px; }
-        h2 { font-weight: 300; color: #aaa; margin-bottom: 20px; }
-
-        /* Player escondido para a música tocar ao fundo */
-        #music-container { position: absolute; left: -9999px; top: -9999px; }
+        .lua { font-size: 50px; margin-bottom: 20px; }
+        h1 { font-weight: 300; font-size: 1.2rem; line-height: 1.5; }
+        /* Player 100% invisível */
+        #music-box { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <div id="music-container">
-        <iframe id="audio-player" width="100" height="100" src="" frameborder="0" allow="autoplay"></iframe>
-    </div>
+    <div id="music-box"></div>
 
     <div id="tela-inicio" class="container">
         <div class="lua">🌙</div>
-        <h1>Bem-vinda ao nosso cantinho, Maria.</h1>
+        <h1>Bem-vinda, Maria.</h1>
         <button onclick="mudarTela('menu')">Entrar</button>
     </div>
 
     <div id="tela-menu" class="container hidden">
         <h2>Nossos Dias</h2>
         <div id="lista-botoes">
-            </div>
+            <button onclick="verDia(1)">Dia 1</button>
+            <button onclick="verDia(2)">Dia 2</button>
+            <button onclick="verDia(3)">Dia 3</button>
+            <button onclick="verDia(4)">Dia 4</button>
+            <button onclick="verDia(5)">Dia 5</button>
+            <button onclick="verDia(6)">Dia 6</button>
+            <button onclick="verDia(7)" id="btn-7" style="color:#444" onclick="aviso()">Dia 7 (🔒)</button>
+        </div>
         <button class="btn-voltar" onclick="mudarTela('inicio')">Sair</button>
     </div>
 
@@ -48,70 +49,50 @@
     </div>
 
     <script>
-        // --- CONFIGURAÇÃO ---
-        const diaLiberado = 6; // Agora liberado até o dia 6!
+        const diaLiberado = 6; 
 
         const linksMusicas = {
-            1: "EbVV9FDxM4c", // Imprevisto - Yago Oproprio
-            2: "qwzQPh7dW_4", // Star Shopping - Lil Peep
-            3: "0YmX4_7VvS8", // Radiance - Apollo Fresh
-            4: "ZfdpQv9hqQo", // Última Noite - Baco Exu do Blues
-            5: "MWh78SM5G7k", // Oceano - Djavan
-            6: "ZMlNHdYTGQA", // Me Chamando de Paixão - Jorge Ben
-            7: "IqvxFBPcxUg"  // Rainha da Pista - ConeCrew
+            1: "EbVV9FDxM4c", // Imprevisto
+            2: "qwzQPh7dW_4", // Star Shopping
+            3: "0YmX4_7VvS8", // Radiance
+            4: "ZfdpQv9hqQo", // Última Noite
+            5: "MWh78SM5G7k", // Oceano
+            6: "ZMlNHdYTGQA", // Me Chamando de Paixão
+            7: "IqvxFBPcxUg"  // Rainha da Pista
         };
 
         const mensagens = {
             1: "Você é linda igual a lua, a diferença é que a lua ilumina a noite, e você ilumina a minha vida.",
             2: "Star Shopping: Pra você lembrar de nós dois sempre que olhar pro céu.",
             3: "Radiance: Porque você brilha mais que qualquer luz.",
-            4: "Cada noite com você é como se fosse a última, de tão especial.",
-            5: "Meu amor por você é um oceano de coisas boas.",
-            6: "Você me chamando de paixão é minha coisa favorita no mundo.",
-            7: "Minha rainha da pista, dona do meu coração."
+            4: "Cada noite com você é como se fosse a última.",
+            5: "Meu amor por você é um oceano.",
+            6: "Você me chamando de paixão é minha coisa favorita.",
+            7: "Minha rainha da pista."
         };
 
-        // Função para criar os botões e verificar se estão liberados
-        function renderizarBotoes() {
-            const lista = document.getElementById('lista-botoes');
-            for (let i = 1; i <= 7; i++) {
-                const btn = document.createElement('button');
-                btn.innerText = `Dia ${i}`;
-                
-                if (i <= diaLiberado) {
-                    btn.onclick = () => verDia(i);
-                } else {
-                    btn.disabled = true;
-                    btn.innerText = `Dia ${i} (Bloqueado 🔒)`;
-                }
-                lista.appendChild(btn);
-            }
-        }
-
         function mudarTela(nome) {
-            document.getElementById('tela-inicio').classList.add('hidden');
-            document.getElementById('tela-menu').classList.add('hidden');
-            document.getElementById('tela-mensagem').classList.add('hidden');
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
             document.getElementById('tela-' + nome).classList.remove('hidden');
         }
 
         function verDia(n) {
-            document.getElementById('texto-msg').innerText = mensagens[n];
-            
-            // Inicia a música de forma invisível
-            const videoId = linksMusicas[n];
-            const player = document.getElementById('audio-player');
-            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0`;
-            
-            mudarTela('mensagem');
+            if (n <= diaLiberado) {
+                document.getElementById('texto-msg').innerText = mensagens[n];
+                
+                // Força o carregamento do player APENAS após o clique
+                const box = document.getElementById('music-box');
+                box.innerHTML = `<iframe src="https://www.youtube.com/embed/${linksMusicas[n]}?autoplay=1&controls=0" allow="autoplay"></iframe>`;
+                
+                mudarTela('mensagem');
+            } else {
+                alert("Esse dia ainda não chegou! ❤️");
+            }
         }
 
         function pararMusica() {
-            document.getElementById('audio-player').src = "";
+            document.getElementById('music-box').innerHTML = "";
         }
-
-        // Inicia os botões ao carregar a página
-        renderizarBotoes();
     </script>
 </body>
 </html>
