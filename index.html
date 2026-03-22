@@ -6,34 +6,89 @@
     <title>Para Maria</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #0a0a0c; /* Fundo escuro noite */
-            color: #f0f0f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; background-color: #0a0a0c;
+            color: #f0f0f0; font-family: 'Segoe UI', sans-serif; text-align: center;
+        }
+        .container { width: 90%; max-width: 400px; padding: 20px; }
+        .hidden { display: none; }
+        
+        /* Estilo dos Botões */
+        button {
+            background: transparent; color: white; border: 1px solid #444;
+            padding: 15px 30px; margin: 10px 0; width: 100%;
+            border-radius: 8px; font-size: 1rem; cursor: pointer;
+            transition: 0.3s;
+        }
+        button:active { background: #222; transform: scale(0.98); }
+        .btn-voltar { margin-top: 30px; border: none; color: #888; font-size: 0.8rem; }
+
+        .lua { font-size: 50px; margin-bottom: 20px; filter: drop-shadow(0 0 10px #fff); }
+        h1 { font-weight: 300; font-size: 1.4rem; line-height: 1.6; }
+        p { color: #888; }
+    </style>
+</head>
+<body>
+
+    <div id="tela-inicio" class="container">
+        <div class="lua">🌙</div>
+        <h1>Bem-vinda, meu amor.</h1>
+        <p>Preparei uma surpresa para os nossos próximos 7 dias.</p>
+        <button onclick="mudarTela('menu')">Iniciar</button>
+    </div>
+
+    <div id="tela-menu" class="container hidden">
+        <h2>Escolha o dia</h2>
+        <button onclick="verDia(1)">Dia 1</button>
+        <button onclick="verDia(2)">Dia 2</button>
+        <button onclick="verDia(3)">Dia 3</button>
+        <button onclick="verDia(4)">Dia 4</button>
+        <button onclick="verDia(5)">Dia 5</button>
+        <button onclick="verDia(6)">Dia 6</button>
+        <button onclick="verDia(7)">Dia 7</button>
+        <button class="btn-voltar" onclick="mudarTela('inicio')">Sair</button>
+    </div>
+
+    <div id="tela-mensagem" class="container hidden">
+        <div class="lua">✨</div>
+        <h1 id="texto-msg"></h1>
+        <button class="btn-voltar" onclick="mudarTela('menu')">← Voltar aos dias</button>
+    </div>
+
+    <script>
+        // --- CONFIGURAÇÃO MANUAL ---
+        // Mude esse número todo dia (1 para dia 1, 2 para dia 2...)
+        const diaLiberado = 1; 
+
+        const mensagens = {
+            1: "Você é linda igual a lua, a diferença é que a lua ilumina a noite, e você ilumina a minha vida. - André",
+            2: "Frase do dia 2 aqui...",
+            3: "Frase do dia 3 aqui...",
+            4: "Frase do dia 4 aqui...",
+            5: "Frase do dia 5 aqui...",
+            6: "Frase do dia 6 aqui...",
+            7: "Frase do dia 7 aqui..."
+        };
+
+        function mudarTela(tela) {
+            document.getElementById('tela-inicio').classList.add('hidden');
+            document.getElementById('tela-menu').classList.add('hidden');
+            document.getElementById('tela-mensagem').classList.add('hidden');
+            document.getElementById('tela-' + tela).classList.remove('hidden');
         }
 
-        .container {
-            padding: 20px;
-            max-width: 80%;
+        function verDia(n) {
+            if (n <= diaLiberado) {
+                document.getElementById('texto-msg').innerText = mensagens[n];
+                mudarTela('mensagem');
+            } else {
+                alert("Calma, apressadinha! Esse dia ainda não chegou. ❤️");
+            }
         }
-
-        .lua {
-            font-size: 50px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px #fff);
-        }
-
-        h1 {
-            font-weight: 300;
-            line-height: 1.6;
-            font-size: 1.5rem;
-            margin-bottom: 40px;
+    </script>
+</body>
+</html>
         }
 
         .contador {
