@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,70 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Maria</title>
     <style>
-        body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #0a0a0c; color: #f0f0f0; font-family: sans-serif; text-align: center; overflow: hidden; }
+        body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #0a0a0c; color: #f0f0f0; font-family: sans-serif; text-align: center; }
         .container { width: 90%; max-width: 400px; padding: 20px; }
         .hidden { display: none !important; }
+        
+        /* Botão Mute Superior */
+        #btn-mute { position: fixed; top: 20px; right: 20px; background: rgba(255,255,255,0.1); border: 1px solid #444; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 100; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; }
+
         button { background: transparent; color: white; border: 1px solid #444; padding: 15px; margin: 5px 0; width: 100%; border-radius: 8px; font-size: 1rem; cursor: pointer; }
-        button:active { background: #222; }
-        .btn-voltar { margin-top: 30px; border: none; color: #888; background: transparent; text-decoration: underline; cursor: pointer; }
+        .btn-voltar { margin-top: 30px; border: none; color: #888; background: transparent; text-decoration: underline; }
         .lua { font-size: 50px; margin-bottom: 20px; }
         h1 { font-weight: 300; font-size: 1.2rem; line-height: 1.5; }
+
         /* Player 100% invisível */
-        #music-box { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+        #video-container { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; overflow: hidden; }
     </style>
 </head>
 <body>
 
-    <div id="music-box"></div>
+    <button id="btn-mute" class="hidden" onclick="toggleMute()">🔊</button>
+
+    <div id="video-container">
+        <div id="player"></div>
+    </div>
 
     <div id="tela-inicio" class="container">
         <div class="lua">🌙</div>
         <h1>Bem-vinda, Maria.</h1>
-        <button onclick="mudarTela('menu')">Entrar</button>
+        <button onclick="iniciarTudo()">Entrar</button>
     </div>
 
     <div id="tela-menu" class="container hidden">
         <h2>Nossos Dias</h2>
-        <div id="lista-botoes">
+        <div id="botoes-dias">
             <button onclick="verDia(1)">Dia 1</button>
             <button onclick="verDia(2)">Dia 2</button>
             <button onclick="verDia(3)">Dia 3</button>
             <button onclick="verDia(4)">Dia 4</button>
             <button onclick="verDia(5)">Dia 5</button>
             <button onclick="verDia(6)">Dia 6</button>
-            <button onclick="verDia(7)" id="btn-7" style="color:#444" onclick="aviso()">Dia 7 (🔒)</button>
+            <button style="color: #444;" onclick="alert('Falta pouco para esse dia! ❤️')">Dia 7 (🔒)</button>
         </div>
-        <button class="btn-voltar" onclick="mudarTela('inicio')">Sair</button>
     </div>
 
     <div id="tela-mensagem" class="container hidden">
         <div class="lua">✨</div>
         <h1 id="texto-msg"></h1>
-        <button class="btn-voltar" onclick="pararMusica(); mudarTela('menu');">← Voltar</button>
+        <button class="btn-voltar" onclick="mudarTela('menu')">← Voltar</button>
     </div>
 
-    <script>
-        const diaLiberado = 6; 
+    <script src="https://www.youtube.com/iframe_api"></script>
 
-        const linksMusicas = {
-            1: "EbVV9FDxM4c", // Imprevisto
-            2: "qwzQPh7dW_4", // Star Shopping
-            3: "0YmX4_7VvS8", // Radiance
-            4: "ZfdpQv9hqQo", // Última Noite
-            5: "MWh78SM5G7k", // Oceano
-            6: "ZMlNHdYTGQA", // Me Chamando de Paixão
-            7: "IqvxFBPcxUg"  // Rainha da Pista
-        };
+    <script>
+        let player;
+        let isMuted = false;
+        const diaLiberado = 6; 
 
         const mensagens = {
             1: "Você é linda igual a lua, a diferença é que a lua ilumina a noite, e você ilumina a minha vida.",
-            2: "Star Shopping: Pra você lembrar de nós dois sempre que olhar pro céu.",
-            3: "Radiance: Porque você brilha mais que qualquer luz.",
-            4: "Cada noite com você é como se fosse a última.",
-            5: "Meu amor por você é um oceano.",
-            6: "Você me chamando de paixão é minha coisa favorita.",
-            7: "Minha rainha da pista."
+            2: "Passar o tempo com você é a melhor parte do meu dia.",
+            3: "Cada detalhe seu me faz ter certeza de que é você.",
+            4: "Minha paz eu encontro no seu sorriso.",
+            5: "Obrigado por ser minha parceira em tudo.",
+            6: "Eu amo a nossa conexão e como a gente se entende."
         };
+
+        // Prepara o Player do YouTube
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0',
+                videoId: 'EbVV9FDxM4c', // ID da música "Imprevisto"
+                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'EbVV9FDxM4c' },
+                events: { 'onReady': onPlayerReady }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player carregado
+        }
+
+        function iniciarTudo() {
+            player.playVideo();
+            document.getElementById('btn-mute').classList.remove('hidden');
+            mudarTela('menu');
+        }
+
+        function toggleMute() {
+            if (isMuted) {
+                player.unMute();
+                document.getElementById('btn-mute').innerText = "🔊";
+            } else {
+                player.mute();
+                document.getElementById('btn-mute').innerText = "🔇";
+            }
+            isMuted = !isMuted;
+        }
 
         function mudarTela(nome) {
             document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
@@ -79,19 +109,8 @@
         function verDia(n) {
             if (n <= diaLiberado) {
                 document.getElementById('texto-msg').innerText = mensagens[n];
-                
-                // Força o carregamento do player APENAS após o clique
-                const box = document.getElementById('music-box');
-                box.innerHTML = `<iframe src="https://www.youtube.com/embed/${linksMusicas[n]}?autoplay=1&controls=0" allow="autoplay"></iframe>`;
-                
                 mudarTela('mensagem');
-            } else {
-                alert("Esse dia ainda não chegou! ❤️");
             }
-        }
-
-        function pararMusica() {
-            document.getElementById('music-box').innerHTML = "";
         }
     </script>
 </body>
