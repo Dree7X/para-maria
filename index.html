@@ -11,13 +11,14 @@
         .hidden { display: none !important; }
         .petala { position: fixed; top: -10%; color: #ff4d6d; font-size: 20px; user-select: none; z-index: 1; animation: fall linear infinite; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        .foto-casal { width: 100%; border-radius: 18px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.2); }
+        
+        /* Foto Quadradinha e Centralizada */
+        .foto-casal { width: 280px; height: 280px; border-radius: 18px; margin: 0 auto 20px auto; border: 1px solid rgba(255,255,255,0.2); object-fit: cover; display: block; }
+
         button { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 14px; margin: 6px 0; width: 100%; border-radius: 15px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; text-transform: lowercase; }
         button:hover { background: rgba(255,77,109,0.2); border-color: #ff4d6d; }
-        /* Botão da Carta em destaque na entrada */
         .btn-carta-entrada { background: transparent; border: none; color: #ff4d6d; text-decoration: underline; margin-top: 10px; font-size: 0.85rem; }
         #btn-mute { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; border-radius: 50%; z-index: 100; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border: 1px solid #444; }
-        h1, h2 { font-weight: 300; font-size: 1.1rem; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -50,7 +51,7 @@
 
     <div id="tela-mensagem" class="container hidden">
         <img id="foto-dia" src="" class="foto-casal">
-        <h1 id="texto-msg" style="font-weight: 300; font-size: 1rem;"></h1>
+        <h1 id="texto-msg" style="font-weight: 300; font-size: 1rem; line-height: 1.4; padding: 0 10px;"></h1>
         <button style="border:none; text-decoration: underline; color:#888; background:transparent;" onclick="mudarTela('menu')">← voltar aos dias</button>
     </div>
 
@@ -58,18 +59,18 @@
     <script>
         let player;
         let isMuted = false;
-        const diaLiberado = 1; //
+        const diaLiberado = 1; 
 
         const fotos = { 1: "foto1.jpg", 2: "foto2.jpg" };
         const mensagens = {
-            1: "você é linda igual a lua, a diferença é que a lua ilumina a noite, e você ilumina a minha vida. - André",
+            1: "tudo em ti é especial, detalhe por detalhe e quanto mais te observo mais eu vejo isso. - André",
             2: "cada segundo ao seu lado é um presente que eu guardo com muito amor."
         };
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
                 height: '0', width: '0',
-                videoId: 'MWh78SM5G7k', // MÚSICA ALTERADA PARA: Oceano - Djavan
+                videoId: 'MWh78SM5G7k', 
                 playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'MWh78SM5G7k' }
             });
         }
