@@ -7,14 +7,15 @@
     <style>
         body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #000; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; text-align: center; overflow: hidden; }
         .bg-blur { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://images.unsplash.com/photo-1464802686167-b939a67e06a1?q=80&w=2069&auto=format&fit=crop') no-repeat center center/cover; filter: blur(12px) brightness(0.3); transform: scale(1.1); z-index: -1; }
-        .container { width: 85%; max-width: 380px; padding: 25px; background: rgba(0, 0, 0, 0.75); border-radius: 25px; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-height: 80vh; overflow-y: auto; }
+        .container { width: 85%; max-width: 380px; padding: 25px; background: rgba(0, 0, 0, 0.75); border-radius: 25px; backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); z-index: 10; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-height: 85vh; overflow-y: auto; }
         .hidden { display: none !important; }
         .petala { position: fixed; top: -10%; color: #ff4d6d; font-size: 20px; user-select: none; z-index: 1; animation: fall linear infinite; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         .foto-casal { width: 100%; border-radius: 18px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.2); }
         button { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 14px; margin: 6px 0; width: 100%; border-radius: 15px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; text-transform: lowercase; }
         button:hover { background: rgba(255,77,109,0.2); border-color: #ff4d6d; }
-        .btn-carta { background: rgba(255, 77, 109, 0.15); border: 1px solid #ff4d6d; margin-bottom: 20px; font-weight: bold; }
+        /* Botão da Carta em destaque na entrada */
+        .btn-carta-entrada { background: transparent; border: none; color: #ff4d6d; text-decoration: underline; margin-top: 10px; font-size: 0.85rem; }
         #btn-mute { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; border-radius: 50%; z-index: 100; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); border: 1px solid #444; }
         h1, h2 { font-weight: 300; font-size: 1.1rem; line-height: 1.5; }
     </style>
@@ -26,14 +27,9 @@
 
     <div id="tela-inicio" class="container">
         <div style="font-size: 50px; margin-bottom: 10px;">❤</div>
-        <h1>nossa história, maria.</h1>
+        <h1 style="font-size: 1rem; margin-bottom: 20px;">pra você, amor (é simples mas de coração).</h1>
         <button onclick="iniciarTudo()">entrar</button>
-    </div>
-
-    <div id="tela-menu" class="container hidden">
-        <button class="btn-carta" onclick="mudarTela('carta')">💌 uma carta para você</button>
-        <h2 style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">nossos dias</h2>
-        <div id="botoes-dias"></div>
+        <button class="btn-carta-entrada" onclick="mudarTela('carta')">💌 ler minha carta para você</button>
     </div>
 
     <div id="tela-carta" class="container hidden">
@@ -43,13 +39,90 @@
             As vezes pareço meio distante e me desculpa por isso, eu ando com problemas comigo mesmo, me acho rude e baixa autoestima comigo mesmo, e isso acaba comigo, mas mesmo assim me desculpa amor. Fiz isso pra te lembrar que eu te amo muito, e que eu estou aqui, pra você e por você, meu amor. <br><br>
             <b>- André</b>
         </p>
-        <button style="border:none; text-decoration: underline; color:#888; background:transparent;" onclick="mudarTela('menu')">voltar</button>
+        <button style="border:none; text-decoration: underline; color:#888; background:transparent;" onclick="mudarTela('inicio')">← voltar para o início</button>
+    </div>
+
+    <div id="tela-menu" class="container hidden">
+        <h2 style="font-size: 0.9rem; color: #888; margin-bottom: 10px;">escolha o dia</h2>
+        <div id="botoes-dias"></div>
+        <button style="border:none; text-decoration: underline; color:#666; margin-top: 15px; background:transparent;" onclick="mudarTela('inicio')">sair</button>
     </div>
 
     <div id="tela-mensagem" class="container hidden">
         <img id="foto-dia" src="" class="foto-casal">
-        <h1 id="texto-msg"></h1>
-        <button style="border:none; text-decoration: underline; color:#888; background:transparent;" onclick="mudarTela('menu')">voltar</button>
+        <h1 id="texto-msg" style="font-weight: 300; font-size: 1rem;"></h1>
+        <button style="border:none; text-decoration: underline; color:#888; background:transparent;" onclick="mudarTela('menu')">← voltar aos dias</button>
     </div>
 
-    <script
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        let player;
+        let isMuted = false;
+        const diaLiberado = 1; //
+
+        const fotos = { 1: "foto1.jpg", 2: "foto2.jpg" };
+        const mensagens = {
+            1: "você é linda igual a lua, a diferença é que a lua ilumina a noite, e você ilumina a minha vida. - André",
+            2: "cada segundo ao seu lado é um presente que eu guardo com muito amor."
+        };
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0', width: '0',
+                videoId: 'MWh78SM5G7k', // MÚSICA ALTERADA PARA: Oceano - Djavan
+                playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'MWh78SM5G7k' }
+            });
+        }
+
+        function iniciarTudo() {
+            player.playVideo();
+            document.getElementById('btn-mute').classList.remove('hidden');
+            gerarBotoes();
+            mudarTela('menu');
+            criarPetalas();
+        }
+
+        function gerarBotoes() {
+            const lista = document.getElementById('botoes-dias');
+            lista.innerHTML = "";
+            for (let i = 1; i <= 7; i++) {
+                const b = document.createElement('button');
+                const liberado = i <= diaLiberado;
+                b.innerHTML = liberado ? `dia ${i}` : `dia ${i} <span style="font-size:10px">🔒</span>`;
+                if (liberado) b.onclick = () => verDia(i);
+                else b.style.opacity = "0.4";
+                lista.appendChild(b);
+            }
+        }
+
+        function verDia(n) {
+            document.getElementById('texto-msg').innerText = mensagens[n];
+            document.getElementById('foto-dia').src = fotos[n];
+            mudarTela('mensagem');
+        }
+
+        function mudarTela(nome) {
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+            document.getElementById('tela-' + nome).classList.remove('hidden');
+        }
+
+        function toggleMute() {
+            isMuted ? player.unMute() : player.mute();
+            document.getElementById('btn-mute').innerText = isMuted ? "🔊" : "🔇";
+            isMuted = !isMuted;
+        }
+
+        function criarPetalas() {
+            setInterval(() => {
+                const p = document.createElement('div');
+                p.className = 'petala';
+                p.innerHTML = '❤';
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 5000);
+            }, 400);
+        }
+    </script>
+</body>
+</html>
