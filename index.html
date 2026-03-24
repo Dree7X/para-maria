@@ -6,26 +6,16 @@
     <title>para maria</title>
     <style>
         body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #000814; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; text-align: center; overflow: hidden; }
-        
-        /* Fundo Azul Navy Profundo */
         .bg-blur { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0, 8, 20, 0.9), rgba(0, 20, 39, 0.95)), url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop') no-repeat center center/cover; filter: blur(15px) brightness(0.3); transform: scale(1.1); z-index: -1; }
-
         .container { width: 85%; max-width: 380px; padding: 25px; background: rgba(0, 20, 39, 0.7); border-radius: 25px; backdrop-filter: blur(20px); border: 1px solid rgba(0, 53, 102, 0.4); z-index: 10; box-shadow: 0 10px 40px rgba(0,0,0,0.8); max-height: 85vh; overflow-y: auto; }
         .hidden { display: none !important; }
-        
-        /* NOVO: Luas caindo em tons de Azul Navy */
         .petala { position: fixed; top: -10%; color: #003566; font-size: 22px; user-select: none; z-index: 1; animation: fall linear infinite; text-shadow: 0 0 8px rgba(0, 53, 102, 0.8); }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        
-        /* Foto Quadradinha */
         .foto-casal { width: 280px; height: 280px; border-radius: 18px; margin: 0 auto 20px auto; border: 1px solid rgba(0, 53, 102, 0.5); object-fit: cover; display: block; }
-
         button { background: rgba(0, 29, 61, 0.4); color: #fff; border: 1px solid rgba(0, 53, 102, 0.5); padding: 14px; margin: 6px 0; width: 100%; border-radius: 15px; font-size: 0.9rem; cursor: pointer; transition: 0.3s; text-transform: lowercase; }
         button:hover { background: rgba(0, 53, 102, 0.5); border-color: #003566; box-shadow: 0 0 15px rgba(0, 53, 102, 0.3); }
-        
         .btn-carta-entrada { background: transparent; border: none; color: #003566; text-decoration: underline; margin-top: 10px; font-size: 0.85rem; font-weight: bold; }
         #btn-mute { position: fixed; top: 20px; right: 20px; width: 45px; height: 45px; border-radius: 50%; z-index: 100; display: flex; align-items: center; justify-content: center; background: rgba(0, 8, 20, 0.6); border: 1px solid #001d3d; }
-        /* Ícone principal da tela inicial */
         .lua-principal { font-size: 50px; margin-bottom: 10px; filter: drop-shadow(0 0 10px #001d3d); color: #003566; }
     </style>
 </head>
@@ -67,12 +57,16 @@
     <script>
         let player;
         let isMuted = false;
-        const diaLiberado = 1; 
+        // ALTERADO: Agora libera até o dia 2
+        const diaLiberado = 2; 
 
-        const fotos = { 1: "foto1.jpg", 2: "foto2.jpg" };
+        const fotos = { 
+            1: "foto1.jpg", 
+            2: "foto2.jpg" 
+        };
         const mensagens = {
             1: "tudo em ti é especial, detalhe por detalhe e quanto mais te observo mais eu vejo isso. - André",
-            2: "amanhã tem mais uma surpresa..."
+            2: "você é muito linda, amor. tudo em ti é maravilhoso, seus olhos, seu cabelo, seu sorriso, seu corpo, você é linda, por dentro, e por fora, princesa. - André"
         };
 
         function onYouTubeIframeAPIReady() {
@@ -88,7 +82,7 @@
             document.getElementById('btn-mute').classList.remove('hidden');
             gerarBotoes();
             mudarTela('menu');
-            criarLuas(); // Chamada da função atualizada
+            criarLuas();
         }
 
         function gerarBotoes() {
@@ -121,17 +115,16 @@
             isMuted = !isMuted;
         }
 
-        // Função atualizada para criar Luas caindo
         function criarLuas() {
             setInterval(() => {
                 const p = document.createElement('div');
                 p.className = 'petala';
-                p.innerHTML = '🌙'; // Trocado o coração pela Lua
+                p.innerHTML = '🌙';
                 p.style.left = Math.random() * 100 + 'vw';
-                p.style.animationDuration = (Math.random() * 4 + 3) + 's'; // Luas caem um pouco mais devagar
+                p.style.animationDuration = (Math.random() * 4 + 3) + 's';
                 document.body.appendChild(p);
-                setTimeout(() => p.remove(), 6000); // Remove depois de 6 segundos
-            }, 500); // A cada meio segundo cria uma lua nova
+                setTimeout(() => p.remove(), 6000);
+            }, 500);
         }
     </script>
 </body>
