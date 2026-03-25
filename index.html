@@ -58,18 +58,17 @@
         let player;
         let isMuted = false;
         
-        // --- LIBERADO ATÉ O DIA 3 ---
+        // --- TRAVA ATUALIZADA PARA O DIA 3 ---
         const diaLiberado = 3; 
 
         const fotos = { 
             1: "foto1.jpg", 
             2: "foto2.jpg",
-            3: "foto3.jpg" // Nova foto adicionada
+            3: "foto3.jpg" 
         };
         const mensagens = {
             1: "tudo em ti é especial, detalhe por detalhe e quanto mais te observo mais eu vejo isso. - André",
             2: "você é muito linda, amor. tudo em ti é maravilhoso, seus olhos, seu cabelo, seu sorriso, seu corpo, você é linda, por dentro, e por fora, princesa. - André",
-            // Nova mensagem adicionada:
             3: "seu sorriso me encanta, fico feliz pelo dia que parou de escondê-lo, porque a partir desse dia, sinto meus dias mais claros e coloridos. - André"
         };
 
@@ -95,9 +94,15 @@
             for (let i = 1; i <= 7; i++) {
                 const b = document.createElement('button');
                 const liberado = i <= diaLiberado;
+                // Se i for menor ou igual a 3, ele entra aqui como liberado
                 b.innerHTML = liberado ? `dia ${i}` : `dia ${i} <span style="font-size:10px">🔒</span>`;
-                if (liberado) b.onclick = () => verDia(i);
-                else b.style.opacity = "0.2";
+                if (liberado) {
+                    b.style.opacity = "1";
+                    b.onclick = () => verDia(i);
+                } else {
+                    b.style.opacity = "0.2";
+                    b.onclick = null;
+                }
                 lista.appendChild(b);
             }
         }
