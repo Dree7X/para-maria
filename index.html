@@ -57,16 +57,20 @@
     <script>
         let player;
         let isMuted = false;
-        // ALTERADO: Agora libera até o dia 2
-        const diaLiberado = 2; 
+        
+        // --- LIBERADO ATÉ O DIA 3 ---
+        const diaLiberado = 3; 
 
         const fotos = { 
             1: "foto1.jpg", 
-            2: "foto2.jpg" 
+            2: "foto2.jpg",
+            3: "foto3.jpg" // Nova foto adicionada
         };
         const mensagens = {
             1: "tudo em ti é especial, detalhe por detalhe e quanto mais te observo mais eu vejo isso. - André",
-            2: "você é muito linda, amor. tudo em ti é maravilhoso, seus olhos, seu cabelo, seu sorriso, seu corpo, você é linda, por dentro, e por fora, princesa. - André"
+            2: "você é muito linda, amor. tudo em ti é maravilhoso, seus olhos, seu cabelo, seu sorriso, seu corpo, você é linda, por dentro, e por fora, princesa. - André",
+            // Nova mensagem adicionada:
+            3: "seu sorriso me encanta, fico feliz pelo dia que parou de escondê-lo, porque a partir desse dia, sinto meus dias mais claros e coloridos. - André"
         };
 
         function onYouTubeIframeAPIReady() {
