@@ -58,18 +58,20 @@
         let player;
         let isMuted = false;
         
-        // --- LIBERADO ATÉ O DIA 3 ---
-        const diaAtual = 3; 
+        // --- LIBERADO ATÉ O DIA 4 ---
+        const diaAtual = 4; 
 
         const fotos = { 
             1: "foto1.jpg", 
             2: "foto2.jpg",
-            3: "foto3.jpg" 
+            3: "foto3.jpg",
+            4: "foto4.jpg" 
         };
         const mensagens = {
             1: "tudo em ti é especial, detalhe por detalhe e quanto mais te observo mais eu vejo isso. - André",
             2: "você é muito linda, amor. tudo em ti é maravilhoso, seus olhos, seu cabelo, seu sorriso, seu corpo, você é linda, por dentro, e por fora, princesa. - André",
-            3: "seu sorriso me encanta, fico feliz pelo dia que parou de escondê-lo, porque a partir desse dia, sinto meus dias mais claros e coloridos. - André"
+            3: "seu sorriso me encanta, fico feliz pelo dia que parou de escondê-lo, porque a partir desse dia, sinto meus dias mais claros e coloridos. - André",
+            4: "seu olhar me apaixona cada vez mais. seu olhar me dá luz, me dá um caminho em qual quero seguir e nunca mais sair. - André"
         };
 
         function onYouTubeIframeAPIReady() {
@@ -93,11 +95,9 @@
             lista.innerHTML = "";
             for (let i = 1; i <= 7; i++) {
                 const b = document.createElement('button');
-                // Lógica simplificada para garantir que i <= 3 seja liberado
                 if (i <= diaAtual) {
                     b.innerHTML = `dia ${i}`;
                     b.onclick = () => verDia(i);
-                    b.style.opacity = "1";
                 } else {
                     b.innerHTML = `dia ${i} <span style="font-size:10px">🔒</span>`;
                     b.style.opacity = "0.2";
@@ -109,7 +109,6 @@
 
         function verDia(n) {
             document.getElementById('texto-msg').innerText = mensagens[n];
-            // Adicionando um timestamp na imagem para forçar o carregamento da nova
             document.getElementById('foto-dia').src = fotos[n] + "?t=" + new Date().getTime();
             mudarTela('mensagem');
         }
