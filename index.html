@@ -58,20 +58,22 @@
         let player;
         let isMuted = false;
         
-        // --- LIBERADO ATÉ O DIA 4 ---
-        const diaAtual = 4; 
+        // --- LIBERADO ATÉ O DIA 5 ---
+        const diaAtual = 5; 
 
         const fotos = { 
             1: "foto1.jpg", 
             2: "foto2.jpg",
             3: "foto3.jpg",
-            4: "foto4.jpg" 
+            4: "foto4.jpg",
+            5: "foto5.jpg"
         };
         const mensagens = {
             1: "tudo em ti é especial, detalhe por detalhe e quanto mais te observo mais eu vejo isso. - André",
             2: "você é muito linda, amor. tudo em ti é maravilhoso, seus olhos, seu cabelo, seu sorriso, seu corpo, você é linda, por dentro, e por fora, princesa. - André",
             3: "seu sorriso me encanta, fico feliz pelo dia que parou de escondê-lo, porque a partir desse dia, sinto meus dias mais claros e coloridos. - André",
-            4: "seu olhar me apaixona cada vez mais. seu olhar me dá luz, me dá um caminho em qual quero seguir e nunca mais sair. - André"
+            4: "seu olhar me apaixona cada vez mais. seu olhar me dá luz, me dá um caminho em qual quero seguir e nunca mais sair. - André",
+            5: "sua voz me encanta, é a melodia que os meus ouvidos precisam. - André"
         };
 
         function onYouTubeIframeAPIReady() {
@@ -109,6 +111,7 @@
 
         function verDia(n) {
             document.getElementById('texto-msg').innerText = mensagens[n];
+            // Timestamp para evitar cache da imagem
             document.getElementById('foto-dia').src = fotos[n] + "?t=" + new Date().getTime();
             mudarTela('mensagem');
         }
